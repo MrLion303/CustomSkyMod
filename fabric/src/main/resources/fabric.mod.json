@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "customskymod",
+  "version": "1.0.3",
+  "name": "CustomSkyMod",
+  "description": "Custom Skyboxes with Textures and Commands",
+  "environment": "client",
+  "entrypoints": {
+    "main": ["org.cotii.customskymod.fabric.CustomSkyModFabric"]
+  },
+  "mixins": ["customskymod.client.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "1.20.1",
+    "fabric-api": "*"
+  }
+}

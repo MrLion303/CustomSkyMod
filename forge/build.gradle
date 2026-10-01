@@ -1,0 +1,8 @@
+plugins { id 'java' }
+def out = file("$buildDir/renamed")
+tasks.jar {
+    dependsOn tasks.named('renameLegacy')
+    archiveFileName = 'CustomSkyMod-1.20.1-forge.jar'
+    from(out)
+    from('src/main/resources')
+}
