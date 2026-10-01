@@ -1,0 +1,26 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+license = "All-Rights-Reserved"
+
+[[mods]]
+modId = "customskyboxes"
+version = "1.0.3"
+displayName = "CustomSkyboxes"
+description = "Custom Skyboxes with Textures and Commands"
+logoFile = "assets/customskyboxes/icon.png"
+# Client-only: servers never need it
+displayTest = "IGNORE_ALL_VERSION"
+
+[[dependencies.customskyboxes]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.customskyboxes]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1]"
+ordering = "NONE"
+side = "CLIENT"

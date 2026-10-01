@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.cotii.customskyboxes.mixin.client",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "RenderSystemMixin",
+    "WorldRendererSkyMixin",
+    "WorldRendererCloudsColorMixin",
+    "WorldRendererWeatherMixin",
+    "BackgroundRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
