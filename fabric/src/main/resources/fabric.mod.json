@@ -4,6 +4,7 @@
   "version": "1.0.3",
   "name": "CustomSkyMod",
   "description": "Custom Skyboxes with Textures and Commands",
+  "authors": ["LAYON", "NegativeStudios"],
   "environment": "client",
   "entrypoints": {
     "main": ["org.cotii.customskymod.fabric.CustomSkyModFabric"]
