@@ -41,9 +41,14 @@ public class ClassRenamer {
                   }
                 };
               }
-              @Override public void visitLdcInsn(Object c) {
-                if(c instanceof String s) c=renameText(s);
-                super.visitLdcInsn(c);
+              @Override public MethodVisitor visitMethod(int access,String name,String descriptor,String signature,String[] exceptions) {
+                MethodVisitor mv=super.visitMethod(access,name,descriptor,signature,exceptions);
+                return new MethodVisitor(Opcodes.ASM9,mv) {
+                  @Override public void visitLdcInsn(Object c) {
+                    if(c instanceof String s) c=renameText(s);
+                    super.visitLdcInsn(c);
+                  }
+                };
               }
             };
             cr.accept(visitor,0);
