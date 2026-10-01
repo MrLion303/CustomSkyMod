@@ -1,5 +1,18 @@
 plugins { id 'java' }
+
+sourceSets { renamer { java.srcDir "$rootDir/tools/renamer/src/main/java" } }
+dependencies {
+    renamerImplementation 'org.ow2.asm:asm:9.7'
+    renamerImplementation 'org.ow2.asm:asm-commons:9.7'
+}
 def out = file("$buildDir/renamed")
+tasks.register('renameLegacy', JavaExec) {
+    dependsOn tasks.named('renamerClasses')
+    classpath = sourceSets.renamer.runtimeClasspath
+    mainClass = 'ClassRenamer'
+    args "$rootDir/legacy/classes", out, false
+    doFirst { delete(out); out.mkdirs() }
+}
 tasks.jar {
     dependsOn tasks.named('renameLegacy')
     archiveFileName = 'CustomSkyMod-1.20.1-forge.jar'
