@@ -11,19 +11,31 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
+
       - name: Download CFR
         run: curl -L --fail -o cfr.jar https://www.benf.org/other/cfr/cfr-0.152.jar
+
+      - name: Package legacy classes
+        run: |
+          jar --create --file legacy.jar -C CustomSkyMod .
+          jar tf legacy.jar | head -50
+
       - name: Decompile
         run: |
+          rm -rf decompiled
           mkdir -p decompiled
-          java -jar cfr.jar CustomSkyMod --outputdir decompiled --silent true
+          java -jar cfr.jar legacy.jar --outputdir decompiled --silent true
+          find decompiled -type f | sort
+
       - name: Archive sources
         run: |
           zip -r decompiled-sources.zip decompiled
+
       - uses: actions/upload-artifact@v4
         with:
           name: decompiled-sources
