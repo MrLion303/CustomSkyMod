@@ -5,14 +5,41 @@ dependencies {
     renamerImplementation 'org.ow2.asm:asm:9.7'
     renamerImplementation 'org.ow2.asm:asm-commons:9.7'
 }
+
 def out = file("$buildDir/renamed")
+def prepared = file("$buildDir/updated-classes")
+
+// Conserva la base existente y aplica encima las clases de la versión actualizada.
+// Así las clases nuevas se incorporan y las modificadas sustituyen a las antiguas.
+tasks.register('prepareUpdatedClasses') {
+    outputs.dir(prepared)
+    doLast {
+        delete(prepared)
+        copy {
+            from "$rootDir/legacy/classes"
+            into prepared
+        }
+        copy {
+            from("$rootDir/CustomSkyBoxes2") {
+                include '**/*.class'
+            }
+            into prepared
+        }
+    }
+}
+
 tasks.register('renameLegacy', JavaExec) {
     dependsOn tasks.named('renamerClasses')
+    dependsOn tasks.named('prepareUpdatedClasses')
     classpath = sourceSets.renamer.runtimeClasspath
     mainClass = 'ClassRenamer'
-    args "$rootDir/legacy/classes", out, true
-    doFirst { delete(out); out.mkdirs() }
+    args prepared, out, true
+    doFirst {
+        delete(out)
+        out.mkdirs()
+    }
 }
+
 tasks.jar {
     dependsOn tasks.named('renameLegacy')
     archiveFileName = 'CustomSkyMod-1.20.1-fabric.jar'
